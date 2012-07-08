@@ -36,8 +36,7 @@
 
 - (NSString *)stringByConvertingHTMLToPlainText {
 	
-	// Pool
-	@autoreleasepool {
+    @autoreleasepool {
         // Character sets
         NSCharacterSet *stopCharacters = [NSCharacterSet characterSetWithCharactersInString:[NSString stringWithFormat:@"< \t\n\r%C%C%C%C", 0x0085, 0x000C, 0x2028, 0x2029]];
         NSCharacterSet *newLineAndWhitespaceCharacters = [NSCharacterSet characterSetWithCharactersInString:[NSString stringWithFormat:@" \t\n\r%C%C%C%C", 0x0085, 0x000C, 0x2028, 0x2029]];
@@ -113,18 +112,12 @@
             
         } while (![scanner isAtEnd]);
         
-        // Cleanup
-        
         // Decode HTML entities and return
-        NSString *retString = [result stringByDecodingHTMLEntities];
+        NSString *retString = [result stringByDecodingHTMLEntities] ;
         
         // Return
         return retString;
-    }
-	
-		
-	
-	
+	}
 }
 
 - (NSString *)stringByDecodingHTMLEntities {
@@ -145,8 +138,8 @@
 
 - (NSString *)stringWithNewLinesAsBRs {
 	
-	// Pool
-	@autoreleasepool {
+    @autoreleasepool {
+        
         // Strange New lines:
         //	Next Line, U+0085
         //	Form Feed, U+000C
@@ -179,7 +172,7 @@
                 
                 // Scan other new line characters and add <br /> s
                 if (temp) {
-                    for (NSUInteger i = 0; i < temp.length; i++) {
+                    for (int i = 0; i < temp.length; i++) {
                         [result appendString:@"<br />"];
                     }
                 }
@@ -188,21 +181,18 @@
             
         } while (![scanner isAtEnd]);
         
-        // Cleanup & return
-        NSString *retString = [NSString stringWithString:result];
+        NSString *retString = [NSString stringWithString:result] ;
+        
         
         // Return
-        return retString;
-
-    }
-	
-		
+        return retString ;
+	}
 }
 
 - (NSString *)stringByRemovingNewLinesAndWhitespace {
 	
-	// Pool
-	@autoreleasepool {
+    @autoreleasepool {
+        
         // Strange New lines:
         //	Next Line, U+0085
         //	Form Feed, U+000C
@@ -231,37 +221,32 @@
             }
             
         }
+                
+        NSString *retString = [NSString stringWithString:result] ;
         
-        // Cleanup
-        
-        // Return
-        NSString *retString = [NSString stringWithString:result];
         
         // Return
-        return retString;
-
-    }
-	
-		
+        return retString ;
+	}
 }
 
 - (NSString *)stringByLinkifyingURLs {
     if (!NSClassFromString(@"NSRegularExpression")) return self;
-	@autoreleasepool {
+    @autoreleasepool {
+        
         NSString *pattern = @"(?<!=\")\\b((http|https):\\/\\/[\\w\\-_]+(\\.[\\w\\-_]+)+([\\w\\-\\.,@?^=%%&amp;:/~\\+#]*[\\w\\-\\@?^=%%&amp;/~\\+#])?)";
         NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern options:0 error:nil];
         NSString *modifiedString = [regex stringByReplacingMatchesInString:self options:0 range:NSMakeRange(0, [self length])
-                                                               withTemplate:@"<a href=\"$1\" class=\"linkified\">$1</a>"];
-       
-        return modifiedString;
+                                                              withTemplate:@"<a href=\"$1\" class=\"linkified\">$1</a>"];
+        
+        return modifiedString ;
     }
-    
 }
 
 - (NSString *)stringByStrippingTags {
 	
-	// Pool
-	@autoreleasepool {
+    @autoreleasepool {
+        
         // Find first & and short-cut if we can
         NSUInteger ampIndex = [self rangeOfString:@"<" options:NSLiteralSearch].location;
         if (ampIndex == NSNotFound) {
@@ -318,16 +303,10 @@
         
         // Remove multi-spaces and line breaks
         finalString = [result stringByRemovingNewLinesAndWhitespace];
-        
-        // Cleanup
-        
-        
+                
         // Return
-        return finalString;
-    }
-	
-	
-	
+        return finalString ;
+	}
 }
 
 @end

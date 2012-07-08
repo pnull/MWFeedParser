@@ -36,6 +36,9 @@
 @property (nonatomic) NSURLConnection *urlConnection;
 @property (nonatomic) NSMutableData *asyncData;
 @property (nonatomic) NSString *asyncTextEncodingName;
+@property (nonatomic) NSURLConnection *urlConnection;
+@property (nonatomic) NSMutableData *xmlData;
+@property (nonatomic) NSString *xmlTextEncodingName;
 
 // Parsing Properties
 @property (nonatomic) NSXMLParser *feedParser;

@@ -40,7 +40,7 @@
 #pragma mark View lifecycle
 
 - (void)viewDidLoad {
-		
+    
 	// Super
 	[super viewDidLoad];
 	
@@ -54,8 +54,8 @@
 	
 	// Refresh button
 	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh 
-																							target:self 
-																							action:@selector(refresh)];
+                                                                                           target:self 
+                                                                                           action:@selector(refresh)];
 	// Parse
 	NSURL *feedURL = [NSURL URLWithString:@"http://images.apple.com/main/rss/hotnews/hotnews.rss"];
 	feedParser = [[MWFeedParser alloc] initWithFeedURL:feedURL];
@@ -63,7 +63,7 @@
 	feedParser.feedParseType = ParseTypeFull; // Parse feed info and all items
 	feedParser.connectionType = ConnectionTypeAsynchronously;
 	[feedParser parse];
-
+    
 }
 
 #pragma mark -
@@ -82,7 +82,7 @@
 - (void)updateTableWithParsedItems {
 	self.itemsToDisplay = [parsedItems sortedArrayUsingDescriptors:
 						   [NSArray arrayWithObject:[[NSSortDescriptor alloc] initWithKey:@"date" 
-																				 ascending:NO]]];
+                                                                                ascending:NO] ]];
 	self.tableView.userInteractionEnabled = YES;
 	self.tableView.alpha = 1;
 	[self.tableView reloadData];
@@ -117,10 +117,10 @@
     } else {
         // Failed but some items parsed, so show and inform of error
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Parsing Incomplete"
-                                                         message:@"There was an error during the parsing of this feed. Not all of the feed items could parsed."
-                                                        delegate:nil
-                                               cancelButtonTitle:@"Dismiss"
-                                               otherButtonTitles:nil];
+                                                        message:@"There was an error during the parsing of this feed. Not all of the feed items could parsed."
+                                                       delegate:nil
+                                              cancelButtonTitle:@"Dismiss"
+                                              otherButtonTitles:nil];
         [alert show];
     }
     [self updateTableWithParsedItems];
@@ -174,7 +174,7 @@
 #pragma mark Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-
+    
 	// Show detail
 	DetailTableViewController *detail = [[DetailTableViewController alloc] initWithStyle:UITableViewStyleGrouped];
 	detail.item = (MWFeedItem *)[itemsToDisplay objectAtIndex:indexPath.row];
@@ -184,9 +184,5 @@
 	[self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 	
 }
-
-#pragma mark -
-#pragma mark Memory management
-
 
 @end
